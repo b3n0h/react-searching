@@ -10,7 +10,9 @@ const bookSchema = new Schema({
     type: String, 
     urequired: true
   },
-  synopsis: String
+  image: String,
+  url: String,
+  synopsis: String,
 });
 
 const Book = mongoose.model("Book", bookSchema);

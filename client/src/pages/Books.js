@@ -10,13 +10,24 @@ import { Input, TextArea, FormBtn } from "../components/Form";
 class Books extends Component {
   state = {
     books: [],
-    title: "",
-    author: "",
-    synopsis: ""
-  };
-
-  componentDidMount() {
-    this.loadBooks();
+    title: ""
+  }
+  
+  handleInputChange = event => {
+    const { name, value } = event.target
+    this.setState({
+      [name]: value
+    })
+  }
+  
+  handleFormSubmit = event => {
+    event.preventDefault()
+    if (this.state.title) {
+      console.log(this.state.title)
+      API.searchBook(this.state.title)
+        .then(res => this.loadBooks())
+        .catch(err => console.log(err))
+    }
   }
 
   loadBooks = () => {
@@ -24,34 +35,16 @@ class Books extends Component {
       .then(res =>
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
       )
-      .catch(err => console.log(err));
-  };
+      .catch(err => console.log(err))
+  }
 
   deleteBook = id => {
     API.deleteBook(id)
       .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
+      .catch(err => console.log(err))
+  }
 
-  handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
 
   render() {
     return (
@@ -68,20 +61,8 @@ class Books extends Component {
                 name="title"
                 placeholder="Title (required)"
               />
-              <Input
-                value={this.state.author}
-                onChange={this.handleInputChange}
-                name="author"
-                placeholder="Author (required)"
-              />
-              <TextArea
-                value={this.state.synopsis}
-                onChange={this.handleInputChange}
-                name="synopsis"
-                placeholder="Synopsis (Optional)"
-              />
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.title)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Book
@@ -111,8 +92,8 @@ class Books extends Component {
           </Col>
         </Row>
       </Container>
-    );
+    )
   }
 }
 
-export default Books;
+export default Books
