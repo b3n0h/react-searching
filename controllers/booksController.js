@@ -1,6 +1,5 @@
 const db = require("../models");
 // DEFINE MONGODB MEHTODS HERE
-// Defining methods for the booksController
 module.exports = {
   findAll: function(req, res) {
     db.Book

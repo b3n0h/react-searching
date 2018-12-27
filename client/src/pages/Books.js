@@ -5,12 +5,12 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
 class Books extends Component {
   state = {
     books: [],
-    title: ""
+    query: ""
   }
   
   handleInputChange = event => {
@@ -22,28 +22,15 @@ class Books extends Component {
   
   handleFormSubmit = event => {
     event.preventDefault()
-    if (this.state.title) {
-      console.log(this.state.title)
-      API.searchBook(this.state.title)
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err))
-    }
+    console.log(this.state.query)
+    API.searchBook(this.state.query.split(' ').join('+'))
+    .then(r => {
+      console.log(r.data)
+    })
+    .catch(e => {
+      console.log(e)
+    })
   }
-
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err))
-  }
-
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err))
-  }
-
 
 
   render() {
@@ -56,13 +43,13 @@ class Books extends Component {
             </Jumbotron>
             <form>
               <Input
-                value={this.state.title}
+                value={this.state.query}
                 onChange={this.handleInputChange}
-                name="title"
+                name="query"
                 placeholder="Title (required)"
               />
               <FormBtn
-                disabled={!(this.state.title)}
+                disabled={!(this.state.query)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Book
@@ -70,25 +57,6 @@ class Books extends Component {
             </form>
           </Col>
           <Col size="md-6 sm-12">
-            <Jumbotron>
-              <h1>Books On My List</h1>
-            </Jumbotron>
-            {this.state.books.length ? (
-              <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
           </Col>
         </Row>
       </Container>
