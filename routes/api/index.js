@@ -8,7 +8,7 @@ router.route("/")
     console.log(req.query.q)
     axios.get('https://www.googleapis.com/books/v1/volumes', {params: {q: req.query.q}})
       .then(r => {
-        console.log(r.data)
+        res.send(r.data.items)
       })
       .catch(e => {
         console.log(e)

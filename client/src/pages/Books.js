@@ -25,7 +25,10 @@ class Books extends Component {
     console.log(this.state.query)
     API.searchBook(this.state.query.split(' ').join('+'))
     .then(r => {
-      console.log(r.data)
+      let books = []
+      r.data.forEach(elem => {
+        console.log(elem.volumeInfo)
+      })
     })
     .catch(e => {
       console.log(e)
