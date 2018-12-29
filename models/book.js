@@ -6,13 +6,10 @@ const bookSchema = new Schema({
     type: String,
     required: true
   },
-  author: {
-    type: String, 
-    urequired: true
-  },
+  authors: String, 
   image: String,
-  url: String,
-  synopsis: String,
+  link: String,
+  description: String,
 });
 
 const Book = mongoose.model("Book", bookSchema);

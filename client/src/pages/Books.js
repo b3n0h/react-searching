@@ -72,6 +72,7 @@ class Books extends Component {
       image: this.state.books[index].image,
       link: this.state.books[index].link
     }
+    console.log(bookData)
     API.saveBook(bookData)
   }
 
