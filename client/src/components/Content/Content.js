@@ -44,7 +44,7 @@ const Content = props => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button onClick={() => props.handleSave ? props.handleSave(index) : ''} size="small" color="primary">
               Save
             </Button>
             <Button size="small" color="primary" href={i.link}>

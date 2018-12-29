@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models")
 // DEFINE MONGODB MEHTODS HERE
 module.exports = {
   findAll: function(req, res) {
@@ -6,31 +6,19 @@ module.exports = {
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
-  findById: function(req, res) {
-    db.Book
-      .findById(req.params.id)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(err => res.status(422).json(err))
   },
   create: function(req, res) {
-    db.Book
-      .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
-  update: function(req, res) {
-    db.Book
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      db.Book.create(req.body, (e, data) => {
+        if (e) return e
+        res.json(data)
+      })
   },
   remove: function(req, res) {
     db.Book
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(err => res.status(422).json(err))
   }
-};
+}

@@ -50,7 +50,7 @@ class Books extends Component {
         r.data.forEach(elem => {
           books.push({
             title: elem.volumeInfo.title,
-            authors: elem.volumeInfo.authors.join(', '),
+            authors: elem.volumeInfo.authors ? elem.volumeInfo.authors.join(', ') : '',
             description: elem.volumeInfo.description,
             image: elem.volumeInfo.imageLinks.thumbnail,
             link: elem.volumeInfo.infoLink
@@ -64,6 +64,16 @@ class Books extends Component {
       })
   }
 
+  handleSave = index => {
+    let bookData = {
+      title: this.state.books[index].title,
+      authors: this.state.books[index].authors,
+      description: this.state.books[index].description,
+      image: this.state.books[index].image,
+      link: this.state.books[index].link
+    }
+    API.saveBook(bookData)
+  }
 
   render() {
 

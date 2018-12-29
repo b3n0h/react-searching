@@ -14,7 +14,8 @@ router.route("/")
         console.log(e)
       })
   })
+  .post(booksController.create)
 
-  
+
 
 module.exports = router
