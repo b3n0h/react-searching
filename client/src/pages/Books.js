@@ -56,7 +56,6 @@ class Books extends Component {
             link: elem.volumeInfo.infoLink
           })
         })
-        console.log(books)
         this.setState({ books: books })
       })
       .catch(e => {
@@ -72,7 +71,6 @@ class Books extends Component {
       image: this.state.books[index].image,
       link: this.state.books[index].link
     }
-    console.log(bookData)
     API.saveBook(bookData)
   }
 
@@ -102,7 +100,7 @@ class Books extends Component {
             </form>
           </Grid >
         </Grid>
-        <Grid container spacing={24} justify='center'>
+        <Grid container justify='center'>
           <Content
             books={this.state.books}
             handleSave={this.handleSave}
