@@ -47,7 +47,7 @@ const Content = props => {
             <Button onClick={() => props.handleSave ? props.handleSave(index) : ''} size="small" color="primary">
               Save
             </Button>
-            <Button size="small" color="primary" href={i.link}>
+            <Button size="small" color="primary" href={i.link} target='_blank'>
               View More
             </Button>
           </CardActions>
